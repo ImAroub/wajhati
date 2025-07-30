@@ -1,0 +1,66 @@
+@model finalproject.Models.TripPlan
+@{
+    ViewData["Title"] = "تفاصيل الرحلة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string cityArabic = Model.City switch
+    {
+        "Riyadh" => "الرياض",
+        "Jeddah" => "جدة",
+        _ => Model.City
+    };
+}
+
+<div class="container mt-5" dir="rtl">
+    <h2 class="text-center mb-4" style="color:#344c3d;">تفاصيل رحلتك إلى @cityArabic</h2>
+    <hr class="mt-4 mb-4">
+
+    <div class="d-flex flex-column align-items-center">
+        @foreach (var day in Model.DailySchedules.OrderBy(d => d.DayNumber))
+        {
+            <div class="card shadow rounded-4 mb-4 w-100" style="max-width: 700px;">
+                <div class="card-header text-white fw-bold text-end rounded-top-4" style="background-color: #41634e;">
+                    <h4 class="m-0">اليوم @day.DayNumber</h4>
+                </div>
+
+                <div class="card-body py-2">
+                    <table class="table table-borderless text-center m-0">
+                        <tbody>
+                            @foreach (var dp in day.DaySchedulePlaces
+                                .OrderBy(p => p.IsMainPlace ? 0 : 1)
+                                .ThenBy(p => p.OrderInDay))
+                            {
+                                <tr>
+                                    <td style="width: 40%;" class="fw-semibold text-end">
+                                        @dp.Place.Name
+                                    </td>
+
+                                    <td style="width: 30%;" class="text-muted text-center">
+                                        @(dp.Place.Type == "Entertainment" ? "ترفيهي" :
+                                          dp.Place.Type == "Mall" ? "سوق" :
+                                          dp.Place.Type == "Historical" ? "تاريخي" :
+                                          dp.Place.Type == "Restaurant" ? "مطعم" :
+                                          dp.Place.Type == "Cafe" ? "كافيه" : "غير معروف")
+                                    </td>
+
+                                    <td style="width: 30%;" class="text-start">
+                                        <a href="@Url.Action("PlaceDetail", "Home", new { id = dp.Place.Id })" class="btn btn-outline-dark btn-sm">تفاصيل</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+
+    <hr class="mt-5 mb-5">
+    <div class="text-center mt-4">
+    <a asp-action="MyTrips" class="btn btn-lg text-white" style="background-color: #344c3d; min-width: 200px;">
+        عرض رحلاتي
+    </a>
+</div>
+
+</div>
+

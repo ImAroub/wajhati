@@ -1,0 +1,108 @@
+@model List<PlaceDetail>
+@{
+    Layout="~/Views/Shared/_AdminLayouts.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col mx-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color:#466652;">
+                    <h4>إضافة تفاصيل مكان</h4>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="AddPlaceDetail" asp-controller="Dashboard" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">اسم المكان</label>
+                                <select class="form-select" name="PlaceId">
+                                    @foreach (var p in ViewBag.placs)
+                                    {
+                                        <option value="@p.Id">@p.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">وصف المكان</label>
+                                <input type="text" class="form-control" name="Description">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">يتطلب حجز؟</label>
+                                <select class="form-select" name="RequiresBooking">
+                                    <option value="true">نعم</option>
+                                    <option value="false">لا</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label class="form-label">الموقع الإلكتروني</label>
+                                <input type="text" class="form-control" name="Website">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">ساعات العمل</label>
+                                <input type="text" class="form-control" name="OpeningHours">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">  صورة المكان</label>
+                                <input type="file" class="form-control" name="ImageFile">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col text-center">
+                                <button class="btn text-white" type="submit" style="background-color: #5e6d50;">حفظ</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="text-muted mt-5" />
+
+    <div class="row mt-5">
+        <div class="col mx-5">
+            <div class="row rounded mx-2 text-white p-2 " style="background-color: #466652;"><h2> تفاصيل الأماكن</h2></div>
+                    @foreach (var detail in Model)
+                        {
+                        <div class="row mt-4">
+                            <div class="col mx-5">
+                                <div class="card border-dark shadow-sm h-100">
+                                    <div class="card-body">
+                                        <h4 style="color: #4d573e;">  @detail.Place.Name</h4>
+                                        <div class="row mt-4">
+                                            <div class="col">
+                                                <img src="@detail.ImageUrl" class=" rounded" height="120" width="150" />
+                                            </div>
+                                            <div class="col ">
+                                                <p></p>
+                                                <p><strong>الوصف:</strong> @detail.Description</p>
+                                                <p><strong>ساعات العمل:</strong> @detail.OpeningHours</p>
+                                            </div>
+                                            <div class="col">
+                                                <p></p>
+                                                <p ><strong>يتطلب حجز؟</strong> @(detail.RequiresBooking ? "نعم" : "لا")</p>
+                                                <p><strong>الموقع الإلكتروني:</strong> @detail.Website</p>
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-end bg-light">
+                                        <a asp-action="EditPlaceDetail" asp-route-id="@detail.Id" class="text-success"><i class="bi bi-pencil-square"></i> تعديل</a>
+                                        
+                                        <a asp-action="DeletePlaceDetail" asp-route-id="@detail.Id" onclick="return confirm('هل أنت متأكد من الحذف؟')" class="text-danger"><i class="bi bi-trash-fill"></i> حذف</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+/* الخط واللون العام */
+body {
+    margin: 0;
+    font-family: 'Tahoma', sans-serif;
+    background-color: #ece7e4;
+    color: #2e2e2e;
+}
+
+/* ✅ الهيدر */
+.dashboard-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1050; /* لازم أعلى من السايدبار */
+    background-color: #344c3d;
+    height: 70px;
+    border-radius: 2rem;
+    padding: 10px 30px;
+}
+
+.page-content {
+    margin-right: 260px;
+    padding: 30px 40px;
+    padding-top: 90px; /* ضروري لو ما أضفتها للـ body */
+}
+
+
+/* روابط وسط الهيدر */
+.nav-center-link {
+    color: white;
+    font-weight: bold;
+    padding: 6px 15px;
+    border-radius: 20px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+.nav-center-link:hover,
+.nav-center-link.active-link {
+    background-color: #829672;
+    color: white;
+}
+
+/* ✅ زر تسجيل الخروج بتنسيق مخصص */
+.custom-login-btn {
+    background-color: #6d7e5c;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 10px;
+    font-size: 1rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+.custom-login-btn:hover {
+    background-color: #5e6d50;
+    color: #fff;
+}
+
+/* ✅ السايدبار */
+.sidebar {
+    position: fixed;
+    top: 110px;
+    right: 20px;
+    bottom: 20px;
+    width: 220px;
+    background-color: #344c3d;
+    border-radius: 25px;
+    z-index: 1030;
+    padding: 20px;
+    text-align: right;
+    color: white;
+}
+
+/* روابط السايدبار */
+.sidebar-link {
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: block;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.sidebar-link:hover,
+.sidebar-link.active-sidebar {
+    background-color: #829672;
+    color: white;
+}
+.sidebar-link i {
+    margin-left: 8px;
+}
+
+

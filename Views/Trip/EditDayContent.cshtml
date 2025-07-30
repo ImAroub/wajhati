@@ -1,0 +1,101 @@
+@model DaySchedule
+@{
+    ViewData["Title"] = "تعديل اليوم";
+    var available = ViewBag.AvailablePlaces as List<Place>;
+    var types = available.Select(p => p.Type).Distinct().ToList();
+
+    Dictionary<string, string> typeTranslations = new()
+    {
+        { "Entertainment", "ترفيهي" },
+        { "Mall", "سوق" },
+        { "Historical", "تاريخي" },
+        { "Restaurant", "مطعم" },
+        { "Cafe", "كافيه" }
+    };
+}
+
+<div class="container mt-5" dir="rtl">
+    <h2 class="text-center mb-4" style="color:#344c3d;">تعديل اليوم رقم @Model.DayNumber</h2>
+    <hr class="mt-4 mb-5">
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="card shadow rounded-4 mb-4 w-100" style="max-width: 700px;">
+            <div class="card-header text-white fw-bold text-end rounded-top-4" style="background-color: #41634e;">
+                <h4 class="m-0">الأماكن المضافة</h4>
+            </div>
+
+            <div class="card-body py-2">
+                <table class="table table-borderless text-center m-0">
+                    <tbody>
+                        @if (Model.DaySchedulePlaces != null && Model.DaySchedulePlaces.Any())
+                        {
+                            foreach (var dp in Model.DaySchedulePlaces
+                                .OrderBy(p => p.IsMainPlace ? 0 : 1)
+                                .ThenBy(p => p.OrderInDay))
+                            {
+                                <tr>
+                                    <td style="width: 40%;" class="fw-semibold text-end">
+                                        @dp.Place?.Name
+                                    </td>
+
+                                    <td style="width: 30%;" class="text-muted text-center">
+                                        @(typeTranslations.ContainsKey(dp.Place?.Type) ? typeTranslations[dp.Place.Type] : "غير معروف")
+                                    </td>
+
+                                    <td style="width: 30%;" class="text-start">
+                                        <a href="javascript:void(0);" class="btn btn-danger btn-sm delete-btn"
+                                        data-action="/Trip/RemovePlaceFromDay?daySchedulePlaceId=@dp.Id">
+                                            حذف
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3">لا توجد أماكن مضافة لهذا اليوم</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <hr class="mt-4">
+    <div class="text-center">
+        <h3 class="text-center mb-4" style="color:#344c3d;">إضافة مكان جديد:</h3>
+        <form asp-action="AddPlaceToDay" method="post" class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
+            <input type="hidden" name="dayId" value="@Model.Id" />
+
+            <select id="typeFilter" class="form-select w-auto" style="min-width: 200px;">
+                <option value="">-- اختر النوع --</option>
+                @foreach (var type in types)
+                {
+                    <option value="@type">@typeTranslations[type]</option>
+                }
+            </select>
+
+            <select name="placeId" id="placeDropdown" class="form-select w-auto" style="min-width: 200px;" required>
+                <option value="">-- اختر المكان --</option>
+                @foreach (var p in available)
+                {
+                    <option value="@p.Id" data-type="@p.Type">@p.Name</option>
+                }
+            </select>
+
+            <input type="hidden" name="order" value="0" />
+            <input type="hidden" name="isMain" id="isMainInput" />
+
+            <button type="submit" class="btn btn-sm text-white " style="min-width: 200px; background-color: #306d47;"> <h5 class="mb-0">إضافة</h5></button>
+        </form>
+    </div>
+
+    <div class="text-center mt-5">
+        <a asp-action="ViewPlan" asp-route-id="@Model.TripPlanId" class="btn  text-white" style="min-width: 200px; background-color:#41634e;"> <h5 class="mb-0">حفظ</h5></a>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

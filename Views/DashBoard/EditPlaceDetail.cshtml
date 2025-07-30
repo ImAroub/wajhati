@@ -1,0 +1,69 @@
+@model PlaceDetail
+@{
+    Layout="~/Views/Shared/_AdminLayouts.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col mx-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color:#616e4f;">
+                    <h4>تعديل تفاصيل مكان</h4>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="UpdatePlaceDetail" asp-controller="Dashboard" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">اسم المكان</label>
+                                    <select asp-for="PlaceId" class="form-select"
+                                        asp-items="@(new SelectList(ViewBag.placs, "Id", "Name", Model.PlaceId))">
+                                    </select>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">وصف المكان</label>
+                                <input asp-for="Description" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label class="form-label">يتطلب حجز؟</label>
+                                <select asp-for="RequiresBooking" class="form-select">
+                                <option value="true">نعم</option>
+                                <option value="false">لا</option>
+                            </select>
+
+                            </div>
+                            <div class="col">
+                                <label class="form-label">موقع المكان</label>
+                                <input asp-for="Website" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label class="form-label">ساعات العمل</label>
+                                <input asp-for="OpeningHours" class="form-control" >
+                            </div>
+                            <div class="col">
+                                <label class="form-label">صورة المكان</label>
+                                <input type="text" class="form-control mb-2" value="@System.IO.Path.GetFileName(Model.ImageUrl)" readonly />
+                                <input type="file" name="ImageFile" class="form-control mt-2" />
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                <button class="btn btn-info" type="submit">حفظ</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "ابدأ التخطيط";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var cities = ViewBag.Cities as List<string>;
+}
+
+<div class="container my-5 w-50" dir="rtl">
+    <h1 class="mt-5 d-flex justify-content-center" style="color:#344c3d;">حدد وجهتك وعدد الأيام</h1>
+    <hr class="mt-5 mb-2">
+
+    <form asp-action="CreatePlan" method="post">
+        <div class="mb-3">
+            <label class="form-label mt-5 fw-bold"><h5> المدينة </h5></label>
+            <select name="city" class="form-select" style="min-width: 200px;" required>
+                <option value="">-- اختر مدينة --</option>
+                @foreach (var city in cities)
+                {
+                    var cityArabic = city switch
+                    {
+                        "Riyadh" => "الرياض",
+                        "Jeddah" => "جدة",
+                        _ => city
+                    };
+                    <option value="@city">@cityArabic</option>
+                }
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-labelfw-bold mt-4"><h5> عدد الأيام </h5></label>
+            <input type="number" name="days" class="form-control" min="1" max="7" required />
+        </div>
+
+        <button type="submit" class="btn w-100 mt-4 fw-bold fs-5 text-white" style="background-color: #6d7e5c;">ابدأ التخطيط</button>
+    </form>
+</div>

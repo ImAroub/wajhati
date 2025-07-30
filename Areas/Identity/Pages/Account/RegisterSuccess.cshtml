@@ -1,0 +1,15 @@
+@page
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@{
+    ViewData["Title"] = "تم التسجيل";
+}
+
+<div class="container mt-5" dir="rtl">
+    <div class="alert alert-success text-center fs-4">
+        @TempData["SuccessMessage"] تم التسجيل بنجاح!
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/Identity/Account/Login" class="btn btn-primary">العودة لتسجيل الدخول</a>
+    </div>
+</div>

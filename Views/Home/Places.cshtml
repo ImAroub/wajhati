@@ -1,0 +1,99 @@
+@model List<Place>
+@{
+    ViewData["Title"] = "الأماكن";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5" dir="rtl">
+    <div class="row align-items-center justify-content-between text-white p-4 rounded mb-4" style="background-color: #344c3d;">
+
+        <div class="text-white p-4 rounded mb-4" style="background-color: #344c3d;">
+    <h4 class="fw-bold mb-4">جميع الأماكن</h4>
+
+    <form method="get" asp-action="Places">
+        <div class="row align-items-end gy-2">
+
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="search" placeholder="بحث بالاسم" value="@ViewBag.SearchTerm" />
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-select" name="city">
+                    <option value="">كل المدن</option>
+                    @foreach (var city in ViewBag.Cities as List<string>)
+                    {
+                        string cityName = city == "Riyadh" ? "الرياض" :
+                                        city == "Jeddah" ? "جدة" : null;
+
+                        if (cityName != null)
+                        {
+                            <option value="@city" selected="@(ViewBag.SelectedCity == city)">
+                                @cityName
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-select" name="type">
+                    <option value="">كل الأنواع</option>
+                    @foreach (var type in ViewBag.Types as List<string>)
+                    {
+                        var typeName = type == "Entertainment" ? "ترفيهي" :
+                                    type == "Mall" ? "سوق" :
+                                    type == "Historical" ? "مكان تاريخي - متحف" :
+                                    type == "Restaurant" ? "مطعم" :
+                                    type == "Cafe" ? "كافيه" : null;
+
+                        if (typeName != null)
+                        {
+                            <option value="@type" selected="@(ViewBag.SelectedType == type)">
+                                @typeName
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn w-100 text-white fw-bold" type="submit" style="background-color:#667359;">بحث</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+    </div>
+
+
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var place in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <a href="@Url.Action("PlaceDetail", "Home", new { id = place.Id })" class="text-decoration-none text-dark">
+                        <div class="card shadow-sm h-100">
+                            @if (!string.IsNullOrEmpty(place.Detail?.ImageUrl))
+                            {
+                                <img src="@place.Detail.ImageUrl" class="card-img-top" alt="صورة المكان" style="height: 150px; object-fit: cover;">
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@place.Name</h5>
+                                <p class="card-text"><strong>النوع:</strong> @place.Type</p>
+                                <p class="card-text"><strong>المدينة:</strong> @place.City</p>
+                                <p class="card-text"><strong>العنوان:</strong> @place.Address</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">لا توجد أماكن مطابقة للفلاتر.</div>
+    }
+</div>

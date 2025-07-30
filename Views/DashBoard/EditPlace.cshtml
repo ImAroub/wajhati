@@ -1,0 +1,73 @@
+@model Place
+@{
+    Layout="~/Views/Shared/_AdminLayouts.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col mx-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color:#616e4f;">
+                    <h4>تعديل المكان </h4>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="UpdatePlace" asp-controller="Dashboard" method="post">
+                      <input type="hidden" asp-for="Id" />
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label"> <strong> اسم المكان</strong></label>
+                                <input asp-for="Name" class="form-control" >
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"><strong>المدينة </strong></label>
+                                <select asp-for="City" class="form-select">
+                                    <option value="">-- اختر المدينة --</option>
+                                    <option value="Jeddah" selected="@(Model.City == "Jeddah")">جدة</option>
+                                    <option value="Riyadh" selected="@(Model.City == "Riyadh")">الرياض</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="City"></span>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"> <strong>نوع المكان </strong></label>
+                                <select asp-for="Type" class="form-select" required>
+                                    <option value="">-- اختر نوع المكان --</option>
+                                    <option value="Entertainment" selected="@(Model.Type == "Entertainment")">ترفيهي</option>
+                                    <option value="Mall" selected="@(Model.Type == "Mall")">سوق</option>
+                                    <option value="Historical" selected="@(Model.Type == "Historical")">مكان تاريخي - متحف</option>
+                                    <option value="Workshop" selected="@(Model.Type == "Workshop")">ورشة عمل</option>
+                                    <option value="Restaurant" selected="@(Model.Type == "Restaurant")">مطعم</option>
+                                    <option value="Cafe" selected="@(Model.Type == "Cafe")">كافيه</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="Type"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col">
+                                <label class="form-label"><strong>موقع المكان</strong></label>
+                                <input asp-for="Address" class="form-control" >
+                                <span class="text-danger" asp-validation-for="Address"></span>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"><strong> خط العرض </strong></label>
+                                <input asp-for="Latitude" class="form-control" >
+                            </div>
+                            <div class="col">
+                                <label class="form-label"> <strong> خط الطول </strong></label>
+                                <input asp-for="Longitude" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                <button class="btn  rounded  text-white" type="submit" style="background-color: #4d573e;">حفظ</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

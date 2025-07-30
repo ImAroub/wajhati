@@ -1,0 +1,125 @@
+@model Place
+@{
+    Layout = "~/Views/Shared/_AdminLayouts.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col mx-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color:#466652;">
+                    <h4>إضافة مكان جديد</h4>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="AddPlace" asp-controller="Dashboard" method="post">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label"> <strong> اسم المكان</strong></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"><strong>المدينة </strong></label>
+                                <select asp-for="City" class="form-select">
+                                    <option value="Jeddah">جدة</option>
+                                    <option value="Riyadh">الرياض</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="City"></span>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"><strong>نوع المكان</strong></label>
+                                    <select asp-for="Type" class="form-select" required>
+                                        <option value="">-- اختر نوع المكان --</option>
+                                        <option value="Entertainment">ترفيهي</option>
+                                        <option value="Mall">سوق</option>
+                                        <option value="Historical">مكان تاريخي - متحف</option>
+                                        <option value="Workshop">ورشة عمل</option>
+                                        <option value="Restaurant">مطعم</option>
+                                        <option value="Cafe">كافيه</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col">
+                                <label class="form-label"><strong>موقع المكان</strong></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span class="text-danger" asp-validation-for="Address"></span>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"><strong> خط العرض </strong></label>
+                                <input asp-for="Latitude" class="form-control"  />
+                            </div>
+                            <div class="col">
+                                <label class="form-label"> <strong> خط الطول </strong></label>
+                                <input asp-for="Longitude" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                <button class="btn  rounded  text-white" type="submit" style="background-color: #5e6d50;">حفظ</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="text-muted mt-5" />
+
+    <div class="row mt-5">
+        <div class="col mx-5">
+            <div class="row rounded p-2 mx-5 text-white" style="background-color: #466652;">
+                <h2> تفاصيل الأماكن</h2>
+            </div>
+            @foreach (var place in (List<finalproject.Models.Place>)ViewBag.PlacesList)
+            {
+                <div class="row mt-4">
+                    <div class="col mx-5">
+                        <div class="card border-dark shadow-sm h-100">
+                            <div class="card-body">
+                                <h4 style="color: #4d573e;">@place.Name</h4>
+                                    <div class="row mt-3">
+                                        <div class="col">    
+                                            <p><strong>النوع:</strong>
+                                                @(place.Type == "Entertainment" ? "ترفيهي" :
+                                                place.Type == "Mall" ? "سوق" :
+                                                place.Type == "Historical" ? "مكان تاريخي - متحف" :
+                                                place.Type == "Restaurant" ? "مطعم" :
+                                                place.Type == "Cafe" ? "كافيه" :
+                                                "غير معروف")
+                                            </p>
+                                            <p><strong>الموقع:</strong> @place.Address</p>
+                                            <p><strong>المدينة:</strong>
+                                                @(place.City == "Riyadh" ? "الرياض" :
+                                                place.City == "Jeddah" ? "جدة" :
+                                                "غير معروف")
+                                            </p>
+                                        </div>
+                                        <div class="col">
+                                            <p><strong>خط العرض:</strong> @place.Latitude</p>
+                                            <p><strong>خط الطول:</strong> @place.Longitude</p>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-end bg-light">
+                                <a asp-action="EditPlace" asp-route-id="@place.Id" class="text-success">
+                                    <i class="bi bi-pencil-square"></i> تعديل
+                                </a>
+                                <a asp-action="DeletePlace" asp-route-id="@place.Id" onclick="return confirm('هل أنت متأكد من الحذف؟')" class="text-danger">
+                                    <i class="bi bi-trash-fill"></i> حذف
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

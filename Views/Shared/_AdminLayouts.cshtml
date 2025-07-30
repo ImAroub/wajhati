@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body style="background-color: #ece7e4;">
+
+    <!-- ✅ هيدر ثابت -->
+    <header class="dashboard-header fixed-top mt-3 mx-3 rounded-4 px-4 py-2 position-relative d-flex align-items-center">
+        <!-- أقصى اليمين: العنوان -->
+        <div class="fw-bold text-white fs-5">لوحة التحكم</div>
+
+        <!-- ✅ روابط ديسكتوب -->
+        <div class="position-absolute start-50 translate-middle-x d-none d-lg-flex gap-4">
+            <a class="nav-link nav-center-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active-link" : "")" asp-controller="Dashboard" asp-action="Index">الرئيسية</a>
+            <a class="nav-link nav-center-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Settings" ? "active-link" : "")" asp-controller="Dashboard" asp-action="Settings">الإعدادات</a>
+        </div>
+
+        <!-- ✅ قائمة منسدلة للجوال -->
+        <div class="dropdown position-absolute start-50 translate-middle-x d-lg-none">
+            <button class="btn btn-light dropdown-toggle" type="button" id="navDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-list"></i>
+            </button>
+            <ul class="dropdown-menu text-end" aria-labelledby="navDropdown">
+                <li>
+                    <a class="dropdown-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" asp-controller="Dashboard" asp-action="Index">الرئيسية</a>
+                </li>
+                <li>
+                    <a class="dropdown-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Settings" ? "active" : "")" asp-controller="Dashboard" asp-action="Settings">الإعدادات</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- تسجيل الخروج -->
+        <div class="position-absolute start-0 ms-5 ">
+            <form method="post" asp-area="Identity" asp-page="/Account/Logout">
+                <button class="custom-login-btn" type="submit">
+                    <i class="bi bi-box-arrow-left"></i> تسجيل الخروج
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- ✅ السايدبار -->
+    <div class="sidebar d-flex flex-column gap-3 p-4">
+        <a asp-controller="Dashboard" asp-action="Index" class="sidebar-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active-sidebar" : "")">
+            <i class="bi bi-house-door ms-2"></i> الرئيسية
+        </a>
+        <a asp-controller="Dashboard" asp-action="Users" class="sidebar-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Users" ? "active-sidebar" : "")">
+            <i class="bi bi-person ms-2"></i> المستخدمين
+        </a>
+        <a asp-controller="Dashboard" asp-action="Place" class="sidebar-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Place" ? "active-sidebar" : "")">
+            <i class="bi bi-diagram-2 ms-2"></i> الأماكن
+        </a>
+        <a asp-controller="Dashboard" asp-action="PlaceDetail" class="sidebar-link @(ViewContext.RouteData.Values["action"]?.ToString() == "PlaceDetail" ? "active-sidebar" : "")">
+            <i class="bi bi-diagram-3-fill ms-2"></i> تفاصيل الأماكن
+        </a>
+    </div>
+
+    <!-- ✅ المحتوى -->
+    <main class="page-content mt-5 pt-4">
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

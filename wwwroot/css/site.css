@@ -1,0 +1,234 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #ece7e4;
+    color: #2e2e2e;
+    padding-top: 90px; /* لأن الهيدر ثابت */
+}
+
+/* عناصر عند التركيز */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* placeholder عربي */
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* الهيدر */
+.navbar {
+    background-color: #ece7e4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+}
+
+/* صندوق التنقل */
+.nav-box {
+    background-color: #344c3d;
+    border-radius: 25px;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* الروابط */
+.nav-item-style {
+    color: white;
+    padding: 6px 15px;
+    margin: 0 3px;
+    border-radius: 15px;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item-style:hover {
+    background-color: #829672;
+    color: white !important;
+}
+
+/* العنصر النشط */
+.active-nav {
+    background-color: #ece7e4;
+    color: #344c3d !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* للشاشات الصغيرة */
+@media (max-width: 992px) {
+    .nav-box {
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+
+/* الزر الأساسي */
+.btn-primary {
+    background-color: #667359;
+    border-color: #9cad8c;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #7d936c;
+    border-color: #7d936c;
+}
+
+/* زر تسجيل الدخول/الخروج */
+/* زر تسجيل الدخول/الخروج */
+.custom-login-btn {
+    background-color: #6d7e5c; /* أغمق شوي */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.custom-login-btn:hover {
+    background-color: #5e6d50;
+    color: #fff;
+}
+
+/* صندوق الروابط */
+.nav-box,
+.nav-links-center {
+    background-color: #344c3d;
+    border-radius: 30px;
+    padding: 10px 50px; /* زيدنا العرض */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    min-width: 350px;
+    max-width: 600px;
+    margin: 0 auto; /* هنا السحر: وسط الصفحة */
+}
+
+.custom-footer {
+    background-color: #344c3d;
+    border-radius: 30px;
+    margin: 40px 20px 10px 20px;
+    padding: 25px 20px;
+    color: white;
+}
+
+/* روابط */
+.footer-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+.footer-link:hover {
+    color: #829672;
+    text-decoration: underline;
+}
+
+.custom-footer {
+    background-color: #344c3d;
+    border-radius: 30px;
+    margin: 40px 20px 0 20px;
+    padding: 25px 20px 10px 20px;
+    color: white;
+    position: relative;
+}
+
+/* أيقونات تواصل – بيضاء واضحة بدون حدود */
+.footer-icon i {
+    font-size: 1.6rem;
+    color: white !important;
+    transition: transform 0.3s ease;
+}
+.footer-icon i:hover {
+    transform: scale(1.1);
+    color: #dcdcdc !important;
+}
+
+/* حقوق ملاصقة للأسفل */
+.custom-footer .copyright {
+    margin-top: auto;
+    padding-bottom: 0;
+}
+
+/* روابط بدون خط */
+.footer-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+.footer-link:hover {
+    color: #dcdcdc;
+}
+
+/* نافذة SweetAlert أصغر وحواف أكثر دائرية */
+.swal-narrow {
+    border-radius: 3rem !important; /* حواف أكثر دائرية */
+    padding: 1rem 1.2rem !important;
+    width: 200px !important; /* تقليل العرض */
+    font-size: 13px !important;
+}
+
+/* تصغير أيقونة التنبيه */
+.swal2-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 11px !important; /* حجم علامة التعجب داخل الدائرة */
+    line-height: 36px !important;
+    margin: 0.5rem auto !important;
+    border-width: 2px !important; /* تأكد أن الدائرة مرسومة بشكل صحيح */
+}
+
+/* تصغير العنوان */
+.swal2-title {
+    font-size: 19px !important;
+    margin-bottom: 0.4rem !important;
+}
+
+/* تصغير النص */
+.swal2-html-container {
+    font-size: 15px !important;
+    margin-bottom: 0.4rem !important;
+}
+
+/* تصغير الأزرار */
+.swal2-actions button {
+    font-size: 12.5px !important;
+    padding: 5px 12px !important;
+    border-radius: 0.75rem !important;
+}
+
+
