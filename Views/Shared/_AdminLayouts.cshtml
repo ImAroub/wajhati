@@ -10,18 +10,14 @@
 </head>
 <body style="background-color: #ece7e4;">
 
-    <!-- ✅ هيدر ثابت -->
     <header class="dashboard-header fixed-top mt-3 mx-3 rounded-4 px-4 py-2 position-relative d-flex align-items-center">
-        <!-- أقصى اليمين: العنوان -->
         <div class="fw-bold text-white fs-5">لوحة التحكم</div>
 
-        <!-- ✅ روابط ديسكتوب -->
         <div class="position-absolute start-50 translate-middle-x d-none d-lg-flex gap-4">
             <a class="nav-link nav-center-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active-link" : "")" asp-controller="Dashboard" asp-action="Index">الرئيسية</a>
             <a class="nav-link nav-center-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Settings" ? "active-link" : "")" asp-controller="Dashboard" asp-action="Settings">الإعدادات</a>
         </div>
 
-        <!-- ✅ قائمة منسدلة للجوال -->
         <div class="dropdown position-absolute start-50 translate-middle-x d-lg-none">
             <button class="btn btn-light dropdown-toggle" type="button" id="navDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-list"></i>
@@ -36,7 +32,6 @@
             </ul>
         </div>
 
-        <!-- تسجيل الخروج -->
         <div class="position-absolute start-0 ms-5 ">
             <form method="post" asp-area="Identity" asp-page="/Account/Logout">
                 <button class="custom-login-btn" type="submit">
@@ -46,7 +41,6 @@
         </div>
     </header>
 
-    <!-- ✅ السايدبار -->
     <div class="sidebar d-flex flex-column gap-3 p-4">
         <a asp-controller="Dashboard" asp-action="Index" class="sidebar-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active-sidebar" : "")">
             <i class="bi bi-house-door ms-2"></i> الرئيسية
@@ -62,7 +56,6 @@
         </a>
     </div>
 
-    <!-- ✅ المحتوى -->
     <main class="page-content mt-5 pt-4">
         @RenderBody()
     </main>
