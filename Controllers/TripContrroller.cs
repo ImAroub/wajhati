@@ -69,7 +69,6 @@ namespace finalproject.Namespace
             var userId = _userManager.GetUserId(User);
             var random = new Random();
 
-            // النسخ الأصلية الثابتة
             var allMainPlaces = _context.places
                 .Where(p => p.City == city &&
                     (p.Type == "Entertainment" || p.Type == "Mall" || p.Type == "Historical" || p.Type == "Workshop"))
@@ -83,7 +82,6 @@ namespace finalproject.Namespace
                 .Where(p => p.City == city && p.Type == "Cafe")
                 .ToList();
 
-            // النسخ المتغيرة اللي راح نستهلك منها
             var mainPlaces = new List<Place>(allMainPlaces);
             var restaurants = new List<Place>(allRestaurants);
             var cafes = new List<Place>(allCafes);
@@ -99,7 +97,6 @@ namespace finalproject.Namespace
 
             for (int i = 1; i <= days; i++)
             {
-                // إذا خلصت، نعيد تعبئة النسخ المتغيرة من الأصل
                 if (mainPlaces.Count == 0) mainPlaces = new List<Place>(allMainPlaces);
                 if (restaurants.Count == 0) restaurants = new List<Place>(allRestaurants);
                 if (cafes.Count == 0) cafes = new List<Place>(allCafes);
@@ -108,7 +105,6 @@ namespace finalproject.Namespace
                 var restaurant = restaurants.OrderBy(x => random.Next()).FirstOrDefault();
                 var cafe = cafes.OrderBy(x => random.Next()).FirstOrDefault();
 
-                // حذفهم من النسخ المتغيرة عشان ما يتكرروا خلال الدورة
                 mainPlaces.Remove(mainPlace);
                 restaurants.Remove(restaurant);
                 cafes.Remove(cafe);
@@ -119,7 +115,6 @@ namespace finalproject.Namespace
                     DaySchedulePlaces = new List<DaySchedulePlace>()
                 };
 
-                // 🟢 رئيسي
                 if (mainPlace != null)
                 {
                     _context.daySchedulePlaces.Add(new DaySchedulePlace
@@ -133,7 +128,6 @@ namespace finalproject.Namespace
 
                 int order = 2;
 
-                // 🟠 مطعم
                 if (restaurant != null)
                 {
                     _context.daySchedulePlaces.Add(new DaySchedulePlace
@@ -145,7 +139,6 @@ namespace finalproject.Namespace
                     });
                 }
 
-                // 🔵 كافيه
                 if (cafe != null)
                 {
                     _context.daySchedulePlaces.Add(new DaySchedulePlace
@@ -198,7 +191,6 @@ namespace finalproject.Namespace
             var city = trip.City;
             var random = new Random();
 
-            // جميع الأماكن الأصلية في المدينة حسب النوع
             var allMainPlaces = _context.places
                 .Where(p => p.City == city &&
                     (p.Type == "Entertainment" || p.Type == "Mall" || p.Type == "Historical" || p.Type == "Workshop"))
@@ -210,23 +202,19 @@ namespace finalproject.Namespace
             var allCafes = _context.places
                 .Where(p => p.City == city && p.Type == "Cafe").ToList();
 
-            // استخراج كل الأماكن المستخدمة سابقًا في الرحلة
             var usedPlaceIds = trip.DailySchedules
                 .SelectMany(ds => ds.DaySchedulePlaces)
                 .Select(p => p.PlaceId)
                 .ToList();
 
-            // إعداد النسخ المتاحة بعد إزالة الأماكن المستخدمة
             var availableMainPlaces = allMainPlaces.Where(p => !usedPlaceIds.Contains(p.Id)).ToList();
             var availableRestaurants = allRestaurants.Where(p => !usedPlaceIds.Contains(p.Id)).ToList();
             var availableCafes = allCafes.Where(p => !usedPlaceIds.Contains(p.Id)).ToList();
 
-            // إذا ما فيه متاح، نرجع نكرر كامل القائمة (loop)
             if (!availableMainPlaces.Any()) availableMainPlaces = new List<Place>(allMainPlaces);
             if (!availableRestaurants.Any()) availableRestaurants = new List<Place>(allRestaurants);
             if (!availableCafes.Any()) availableCafes = new List<Place>(allCafes);
 
-            // اختيار عشوائي
             var mainPlace = availableMainPlaces.OrderBy(x => random.Next()).FirstOrDefault();
             var restaurant = availableRestaurants.OrderBy(x => random.Next()).FirstOrDefault();
             var cafe = availableCafes.OrderBy(x => random.Next()).FirstOrDefault();
@@ -286,7 +274,6 @@ namespace finalproject.Namespace
             if (day == null)
                 return NotFound();
 
-            // حذف الأماكن المرتبطة باليوم أولًا
             _context.daySchedulePlaces.RemoveRange(day.DaySchedulePlaces);
             _context.daySchedules.Remove(day);
 
@@ -338,14 +325,12 @@ namespace finalproject.Namespace
             var place = _context.places.FirstOrDefault(p => p.Id == placeId);
             if (place == null) return NotFound();
 
-            // تصنيف تلقائي: فقط "مطعم" و"كافيه" تعتبر فرعية
             bool isMain = !(place.Type == "Restaurant" || place.Type == "Cafe");
 
             int order;
 
             if (isMain)
             {
-                // نحسب آخر ترتيب للمكان الرئيسي
                 var lastMain = day.DaySchedulePlaces
                     .Where(p => p.IsMainPlace)
                     .OrderByDescending(p => p.OrderInDay)
@@ -355,7 +340,6 @@ namespace finalproject.Namespace
             }
             else
             {
-                // نحسب آخر ترتيب للمكان الفرعي (بعد كل الرئيسي)
                 var lastSub = day.DaySchedulePlaces
                     .Where(p => !p.IsMainPlace)
                     .OrderByDescending(p => p.OrderInDay)
@@ -431,7 +415,6 @@ namespace finalproject.Namespace
         [Authorize]
         public IActionResult SaveTrip(int tripId)
         {
-            // مستقبلاً ممكن نضيف منطق هنا إذا فيه شيء إضافي للحفظ
 
             return RedirectToAction("MyTrips");
         }
@@ -448,14 +431,11 @@ namespace finalproject.Namespace
             if (trip == null)
                 return NotFound();
 
-            // حذف جميع الأماكن
             var allPlaces = trip.DailySchedules.SelectMany(d => d.DaySchedulePlaces).ToList();
             _context.daySchedulePlaces.RemoveRange(allPlaces);
 
-            // حذف جميع الأيام
             _context.daySchedules.RemoveRange(trip.DailySchedules);
 
-            // حذف الخطة
             _context.tripPlans.Remove(trip);
 
             await _context.SaveChangesAsync();
