@@ -55,7 +55,7 @@ namespace finalproject.Namespace
 
 
             ViewBag.PlacesList = _context.places.ToList();
-            return View("Place", place); // ✅ مش قائمة
+            return View("Place", place); 
 
         }
 
