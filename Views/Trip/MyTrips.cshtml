@@ -10,17 +10,14 @@
 
 <div class="container mt-5" dir="rtl">
 
-    <!-- ✅ العنوان بسطر مستقل -->
     <div class="text-white p-4 rounded-top mb-0" style="background-color: #344c3d;">
         <h3 class="fw-bold mb-0">رحلاتي</h3>
     </div>
 
-    <!-- ✅ الفلاتر داخل الفورم بسطر ثاني -->
     <div class="text-white p-4 rounded-bottom mb-4" style="background-color: #344c3d;">
         <form method="get" asp-action="MyTrips">
             <div class="row gy-3 align-items-end">
 
-                <!-- الفلتر -->
                 <div class="col-md-3">
                     <select id="cityFilter" name="city" class="form-select">
                         <option value="">كل المدن</option>
@@ -34,7 +31,6 @@
                     </select>
                 </div>
 
-                <!-- زر البحث -->
                 <div class="col-md-2">
                     <button type="submit" class="btn text-white fw-bold w-100" style="background-color:#667359;">بحث</button>
                 </div>
@@ -60,7 +56,6 @@
             <div class="col-md-6 mb-4 trip-card" data-city="@trip.City">
                 <div class="card shadow rounded-4 h-100 ">
 
-                    <!-- ✅ الهيدر يمين -->
                     <div class="card-header text-white rounded-top-4 fw-bold text-end" style="background-color: #41634e;">
                         <h3>الرحلة إلى @cityArabic</h3> 
                     </div>
@@ -68,7 +63,6 @@
                     <div class="card-body text-center d-flex flex-column justify-content-between">
                         <p class="fw-bold fs-5 text-dark mt-4">عدد أيام الرحلة : @trip.NumberOfDays</p>
 
-                        <!-- ✅ أزرار التفاصيل والحذف داخل البودي -->
                         <div class="d-flex justify-content-center gap-2 mt-3">
                             <a asp-action="TripDetails" asp-route-id="@trip.Id" class="btn btn-sm text-white" style="background-color:#41634e;">
                                 تفاصيل الرحلة
