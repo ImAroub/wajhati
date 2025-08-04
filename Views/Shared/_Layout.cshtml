@@ -17,18 +17,14 @@
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #ece7e4;">
             <div class="container-fluid d-flex justify-content-between align-items-center">
 
-                <!-- Right: Logo -->
                 <a class="navbar-brand fw-bold d-flex align-items-center me-4" asp-controller="Home" asp-action="Index">
                     <img src="/images/photo_2025-07-30_18-40-59.png" alt="وجهتي" style="height: 60px;" class="me-2" />
                 </a>
 
-
-                <!-- Toggle for small screens -->
                 <button class="navbar-toggler me-5" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- Center: Navigation Links -->
                 <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
                     <div class="nav-box d-flex">
                         <a class="nav-link nav-item-style @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active-nav" : "")" asp-controller="Home" asp-action="Index">الرئيسية</a>
@@ -37,7 +33,6 @@
                     </div>
                 </div>
 
-                <!-- Left: Login / Logout -->
                 <div class="ms-2">
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -87,7 +82,6 @@
             </div>
         </div>
 
-        <!-- Bottom: حقوق -->
         <div class="text-center mt-5 small copyright" style="color: aliceblue;">
             © 2025 جميع الحقوق محفوظة لوجهتي.
         </div>
