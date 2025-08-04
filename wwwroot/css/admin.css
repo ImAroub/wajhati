@@ -1,4 +1,3 @@
-/* الخط واللون العام */
 body {
     margin: 0;
     font-family: 'Tahoma', sans-serif;
@@ -6,13 +5,12 @@ body {
     color: #2e2e2e;
 }
 
-/* ✅ الهيدر */
 .dashboard-header {
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    z-index: 1050; /* لازم أعلى من السايدبار */
+    z-index: 1050; 
     background-color: #344c3d;
     height: 70px;
     border-radius: 2rem;
@@ -22,11 +20,10 @@ body {
 .page-content {
     margin-right: 260px;
     padding: 30px 40px;
-    padding-top: 90px; /* ضروري لو ما أضفتها للـ body */
+    padding-top: 90px; 
 }
 
 
-/* روابط وسط الهيدر */
 .nav-center-link {
     color: white;
     font-weight: bold;
@@ -41,7 +38,6 @@ body {
     color: white;
 }
 
-/* ✅ زر تسجيل الخروج بتنسيق مخصص */
 .custom-login-btn {
     background-color: #6d7e5c;
     color: white;
@@ -60,7 +56,6 @@ body {
     color: #fff;
 }
 
-/* ✅ السايدبار */
 .sidebar {
     position: fixed;
     top: 110px;
@@ -75,7 +70,6 @@ body {
     color: white;
 }
 
-/* روابط السايدبار */
 .sidebar-link {
     color: white;
     padding: 10px 15px;
